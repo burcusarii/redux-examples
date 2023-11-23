@@ -16,7 +16,15 @@ export const todosSlice = createSlice({
       },
     ],
   },
-  reducers: {},
+  reducers: {
+    addTodo: (state, action) => {
+      if (action.payload.title === "") {
+        alert("Please enter new todo");
+      } else {
+        state.items.push(action.payload);
+      }
+    },
+  },
 });
-
+export const { addTodo } = todosSlice.actions;
 export default todosSlice.reducer;

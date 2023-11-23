@@ -20,6 +20,12 @@
   outline: 1px gray solid;
 }
 
+.btn-add {
+  border: solid 1px gray;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 10px;
+}
 .main {
   position: relative;
   z-index: 2;
@@ -41,7 +47,7 @@
   font-size: 0;
   position: relative;
   top: -42px;
-  left: -205px;
+  left: -235px;
   -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
