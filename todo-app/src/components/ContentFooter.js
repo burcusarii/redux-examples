@@ -1,10 +1,13 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 function ContentFooter() {
+  const items = useSelector((state) => state.todos.items);
+  const notCompleted = items.filter((item) => item.completed === false);
+
   return (
     <div className="content-footer">
       <span className="todo-count">
-        <strong>2 </strong>
+        <strong>{notCompleted.length} </strong>
         items left
       </span>
 
