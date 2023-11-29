@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 export const todosSlice = createSlice({
   name: "todos",
@@ -18,12 +18,24 @@ export const todosSlice = createSlice({
     activeFilter: "all",
   },
   reducers: {
-    addTodo: (state, action) => {
-      if (action.payload.title === "") {
-        alert("Please enter new todo");
-      } else {
-        state.items.push(action.payload);
-      }
+    addTodo: {
+      reducer: (state, action) => {
+        if (action.payload.title === "") {
+          alert("Please enter new todo");
+        } else {
+          state.items.push(action.payload);
+        }
+      },
+
+      prepare: ({ title }) => {
+        return {
+          payload: {
+            id: nanoid(),
+            completed: false,
+            title,
+          },
+        };
+      },
     },
 
     toggle: (state, action) => {

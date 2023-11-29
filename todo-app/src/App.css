@@ -74,6 +74,7 @@
 .todo-list li {
   position: relative;
   font-size: 24px;
+  text-transform: uppercase;
 }
 
 .todo-list li.editing {
