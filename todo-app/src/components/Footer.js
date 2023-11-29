@@ -4,4 +4,4 @@ function Footer() {
   return <footer className="footer">Created by Burcu Irem SARI</footer>;
 }
 
-export default Footer;
+export default React.memo(Footer);
