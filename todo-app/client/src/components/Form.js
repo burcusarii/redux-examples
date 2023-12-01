@@ -1,27 +1,32 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTodo } from "../redux/todos/todosSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { useState } from "react";
+import Loading from "./Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodoAsync } from "../redux/todos/todosSlice";
 function Form() {
-  const [newTodo, setNewtodo] = useState("");
+  const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    dispatch(addTodo({ id: nanoid(), title: newTodo, completed: false }));
-    setNewtodo("");
+  const isLoading = useSelector((state) => state.todos.addNewTodoisLoading);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    await dispatch(addTodoAsync({ title }));
+    setTitle("");
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <input
+        disabled={isLoading}
         className="new-todo"
         placeholder="enter new todo"
         autoFocus
-        value={newTodo}
+        value={title}
         onChange={(e) => {
-          console.log(newTodo);
+          console.log(title);
 
-          setNewtodo(e.target.value);
+          setTitle(e.target.value);
         }}
       />
       <button className="btn-add" type="submit">

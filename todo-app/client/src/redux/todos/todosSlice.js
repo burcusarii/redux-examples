@@ -1,9 +1,23 @@
-import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const getTodosAsync = createAsyncThunk(
   "todo/getTodosAsync",
   async () => {
     const res = await fetch("http://localhost:7000/todos");
+    return await res.json();
+  }
+);
+
+export const addTodoAsync = createAsyncThunk(
+  "todo/addTodosAsync",
+  async (data) => {
+    const res = await fetch("http://localhost:7000/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
     return await res.json();
   }
 );
@@ -15,28 +29,10 @@ export const todosSlice = createSlice({
     isLoading: false,
     error: null,
     activeFilter: "all",
+    addNewTodoisLoading: false,
+    addNewTodoError: null,
   },
   reducers: {
-    addTodo: {
-      reducer: (state, action) => {
-        if (action.payload.title === "") {
-          alert("Please enter new todo");
-        } else {
-          state.items.push(action.payload);
-        }
-      },
-
-      prepare: ({ title }) => {
-        return {
-          payload: {
-            id: nanoid(),
-            completed: false,
-            title,
-          },
-        };
-      },
-    },
-
     toggle: (state, action) => {
       const id = action.payload.id;
       state.items.map((item) => {
@@ -61,6 +57,7 @@ export const todosSlice = createSlice({
     },
   },
   extraReducers: {
+    // get todos
     [getTodosAsync.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -71,6 +68,23 @@ export const todosSlice = createSlice({
     [getTodosAsync.rejected]: (state, action) => {
       state.error = action.error.message;
       state.isLoading = false;
+    },
+
+    // add todo
+    [addTodoAsync.pending]: (state, action) => {
+      state.addNewTodoisLoading = true;
+    },
+    [addTodoAsync.fulfilled]: (state, action) => {
+      if (action.payload.title === "") {
+        alert("Please enter new todo");
+      } else {
+        state.items.push(action.payload);
+      }
+      state.addNewTodoisLoading = false;
+    },
+    [addTodoAsync.rejected]: (state, action) => {
+      state.addNewTodoisLoading = false;
+      state.addNewTodoError = action.error.message;
     },
   },
 });
@@ -85,6 +99,6 @@ export const selectFilteredTodos = (state) => {
     return state.todos.items.filter((item) => item.completed === true);
   }
 };
-export const { addTodo, toggle, destroy, changeActiveFilter, clearCompleted } =
+export const { toggle, destroy, changeActiveFilter, clearCompleted } =
   todosSlice.actions;
 export default todosSlice.reducer;
