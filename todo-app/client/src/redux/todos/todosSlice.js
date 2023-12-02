@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+// GET TODOS
 export const getTodosAsync = createAsyncThunk(
   "todo/getTodosAsync",
   async () => {
@@ -8,11 +9,27 @@ export const getTodosAsync = createAsyncThunk(
   }
 );
 
+// ADD TODO
 export const addTodoAsync = createAsyncThunk(
   "todo/addTodosAsync",
   async (data) => {
     const res = await fetch("http://localhost:7000/todos", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return await res.json();
+  }
+);
+
+// TOGGLE TODO
+export const toggleTodoAsync = createAsyncThunk(
+  "todo/toggleTodoAsync",
+  async ({ id, data }) => {
+    const res = await fetch(`http://localhost:7000/todos/${id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,15 +50,6 @@ export const todosSlice = createSlice({
     addNewTodoError: null,
   },
   reducers: {
-    toggle: (state, action) => {
-      const id = action.payload.id;
-      state.items.map((item) => {
-        if (item.id === id) {
-          item.completed = !item.completed;
-        }
-      });
-    },
-
     destroy: (state, action) => {
       const id = action.payload.id;
       const filtered = state.items.filter((item) => item.id !== id);
@@ -85,6 +93,13 @@ export const todosSlice = createSlice({
     [addTodoAsync.rejected]: (state, action) => {
       state.addNewTodoisLoading = false;
       state.addNewTodoError = action.error.message;
+    },
+
+    // toggle todo
+    [toggleTodoAsync.fulfilled]: (state, action) => {
+      const { id, completed } = action.payload;
+      const index = state.items.findIndex((item) => item.id == id);
+      state.items[index].completed = completed;
     },
   },
 });
