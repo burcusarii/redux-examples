@@ -39,6 +39,20 @@ export const toggleTodoAsync = createAsyncThunk(
   }
 );
 
+// DELETE TODO
+export const deleteTodoAsync = createAsyncThunk(
+  "todo/deleteTodoAsync",
+  async (id) => {
+    await fetch(`http://localhost:7000/todos/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await id;
+  }
+);
+
 export const todosSlice = createSlice({
   name: "todos",
   initialState: {
@@ -50,11 +64,6 @@ export const todosSlice = createSlice({
     addNewTodoError: null,
   },
   reducers: {
-    destroy: (state, action) => {
-      const id = action.payload.id;
-      const filtered = state.items.filter((item) => item.id !== id);
-      state.items = filtered;
-    },
     changeActiveFilter: (state, action) => {
       state.activeFilter = action.payload;
     },
@@ -83,11 +92,8 @@ export const todosSlice = createSlice({
       state.addNewTodoisLoading = true;
     },
     [addTodoAsync.fulfilled]: (state, action) => {
-      if (action.payload.title === "") {
-        alert("Please enter new todo");
-      } else {
-        state.items.push(action.payload);
-      }
+      state.items.push(action.payload);
+
       state.addNewTodoisLoading = false;
     },
     [addTodoAsync.rejected]: (state, action) => {
@@ -98,8 +104,15 @@ export const todosSlice = createSlice({
     // toggle todo
     [toggleTodoAsync.fulfilled]: (state, action) => {
       const { id, completed } = action.payload;
-      const index = state.items.findIndex((item) => item.id == id);
+      const index = state.items.findIndex((item) => item.id === id);
       state.items[index].completed = completed;
+    },
+
+    // delete todo
+    [deleteTodoAsync.fulfilled]: (state, action) => {
+      const id = action.payload;
+      const filtered = state.items.filter((item) => item.id !== id);
+      state.items = filtered;
     },
   },
 });
@@ -114,6 +127,5 @@ export const selectFilteredTodos = (state) => {
     return state.todos.items.filter((item) => item.completed === true);
   }
 };
-export const { toggle, destroy, changeActiveFilter, clearCompleted } =
-  todosSlice.actions;
+export const { changeActiveFilter, clearCompleted } = todosSlice.actions;
 export default todosSlice.reducer;

@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  toggle,
-  destroy,
   getTodosAsync,
   toggleTodoAsync,
   selectFilteredTodos,
+  deleteTodoAsync,
 } from "../redux/todos/todosSlice";
 import Loading from "./Loading";
 import Error from "./Error";
@@ -15,9 +14,9 @@ function TodoList() {
   const isLoading = useSelector((state) => state.todos.isLoading);
   const error = useSelector((state) => state.todos.error);
 
-  const handleDestroy = (item) => {
+  const handleDestroy = async (id) => {
     if (window.confirm("Are You Sure?")) {
-      dispatch(destroy(item));
+      dispatch(deleteTodoAsync(id));
     }
   };
 
@@ -50,7 +49,7 @@ function TodoList() {
             <label>{item.title}</label>
             <button
               className="destroy"
-              onClick={() => handleDestroy(item)}
+              onClick={() => handleDestroy(item.id)}
             ></button>
           </div>
         </li>

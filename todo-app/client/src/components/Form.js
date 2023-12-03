@@ -15,7 +15,11 @@ function Form() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await dispatch(addTodoAsync({ title }));
+    if (e.target[0].value === "") {
+      alert("please enter todo");
+    } else {
+      await dispatch(addTodoAsync({ title }));
+    }
     setTitle("");
   };
 
@@ -47,8 +51,6 @@ function Form() {
             autoFocus
             value={title}
             onChange={(e) => {
-              console.log(title);
-
               setTitle(e.target.value);
             }}
           />
