@@ -62,8 +62,10 @@ export const todosSlice = createSlice({
     activeFilter: localStorage.getItem("activeFilter")
       ? localStorage.getItem("activeFilter")
       : "all",
-    addNewTodoisLoading: false,
-    addNewTodoError: null,
+    addNewTodo: {
+      isLoading: false,
+      error: null,
+    },
   },
   reducers: {
     changeActiveFilter: (state, action) => {
@@ -91,16 +93,17 @@ export const todosSlice = createSlice({
 
     // add todo
     [addTodoAsync.pending]: (state, action) => {
-      state.addNewTodoisLoading = true;
+      state.addNewTodo.isLoading = true;
     },
     [addTodoAsync.fulfilled]: (state, action) => {
       state.items.push(action.payload);
 
-      state.addNewTodoisLoading = false;
+      state.addNewTodo.isLoading = false;
     },
     [addTodoAsync.rejected]: (state, action) => {
-      state.addNewTodoisLoading = false;
-      state.addNewTodoError = action.error.message;
+      state.addNewTodo.isLoading = false;
+      console.log("error", action.error.message);
+      state.addNewTodo.error = action.error.message;
     },
 
     // toggle todo
