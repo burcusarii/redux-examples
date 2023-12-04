@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeActiveFilter,
@@ -10,6 +10,10 @@ function ContentFooter() {
   const notCompleted = items.filter((item) => item.completed === false);
 
   const activeFilter = useSelector((state) => state.todos.activeFilter);
+
+  useEffect(() => {
+    localStorage.setItem("activeFilter", activeFilter);
+  }, [activeFilter]);
 
   const dispatch = useDispatch();
   return (
