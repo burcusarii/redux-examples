@@ -77,48 +77,50 @@ export const todosSlice = createSlice({
       state.items = filtered;
     },
   },
-  extraReducers: {
+  extraReducers(builder) {
     // get todos
-    [getTodosAsync.pending]: (state, action) => {
+    builder.addCase(getTodosAsync.pending, (state) => {
       state.isLoading = true;
-    },
-    [getTodosAsync.fulfilled]: (state, action) => {
+    });
+    builder.addCase(getTodosAsync.fulfilled, (state, action) => {
       state.items = action.payload;
       state.isLoading = false;
-    },
-    [getTodosAsync.rejected]: (state, action) => {
+    });
+
+    builder.addCase(getTodosAsync.rejected, (state, action) => {
       state.error = action.error.message;
       state.isLoading = false;
-    },
+    });
 
     // add todo
-    [addTodoAsync.pending]: (state, action) => {
+    builder.addCase(addTodoAsync.pending, (state, action) => {
       state.addNewTodo.isLoading = true;
-    },
-    [addTodoAsync.fulfilled]: (state, action) => {
-      state.items.push(action.payload);
+    });
 
+    builder.addCase(addTodoAsync.fulfilled, (state, action) => {
+      state.items.push(action.payload);
       state.addNewTodo.isLoading = false;
-    },
-    [addTodoAsync.rejected]: (state, action) => {
+    });
+
+    builder.addCase(addTodoAsync.rejected, (state, action) => {
       state.addNewTodo.isLoading = false;
       console.log("error", action.error.message);
       state.addNewTodo.error = action.error.message;
-    },
-
+    });
     // toggle todo
-    [toggleTodoAsync.fulfilled]: (state, action) => {
+
+    builder.addCase(toggleTodoAsync.fulfilled, (state, action) => {
       const { id, completed } = action.payload;
       const index = state.items.findIndex((item) => item.id === id);
       state.items[index].completed = completed;
-    },
+    });
 
     // delete todo
-    [deleteTodoAsync.fulfilled]: (state, action) => {
+    builder.addCase(deleteTodoAsync.fulfilled, (state, action) => {
       const id = action.payload;
       const filtered = state.items.filter((item) => item.id !== id);
       state.items = filtered;
-    },
+    });
   },
 });
 
