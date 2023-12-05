@@ -5,6 +5,7 @@ import {
   addTodoAsync,
   toggleTodoAsync,
   deleteTodoAsync,
+  clearCompletedAsync,
 } from "./services";
 
 export const todosSlice = createSlice({
@@ -69,6 +70,10 @@ export const todosSlice = createSlice({
       const id = action.payload;
       const filtered = state.items.filter((item) => item.id !== id);
       state.items = filtered;
+    });
+
+    builder.addCase(clearCompletedAsync.fulfilled, (state, action) => {
+      state.items = action.payload;
     });
   },
 });

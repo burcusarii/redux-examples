@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeActiveFilter, selectTodos } from "../redux/todos/todosSlice";
-import { deleteTodoAsync } from "../redux/todos/services";
+import { clearCompletedAsync } from "../redux/todos/services";
 function ContentFooter() {
   const items = useSelector(selectTodos);
   const notCompleted = items.filter((item) => item.completed === false);
-
+  const dispatch = useDispatch();
   const activeFilter = useSelector((state) => state.todos.activeFilter);
 
   useEffect(() => {
@@ -15,14 +15,10 @@ function ContentFooter() {
   // clear completed
   const clearCompleted = () => {
     if (window.confirm("Are you sure?")) {
-      const filtered = items.filter((item) => item.completed === true);
-      filtered.forEach(async (item) => {
-        await dispatch(deleteTodoAsync(item.id));
-      });
+      dispatch(clearCompletedAsync());
     }
   };
 
-  const dispatch = useDispatch();
   return (
     <div className="content-footer">
       <span className="todo-count">
@@ -66,5 +62,4 @@ function ContentFooter() {
     </div>
   );
 }
-
 export default ContentFooter;

@@ -52,3 +52,16 @@ export const deleteTodoAsync = createAsyncThunk(
     return await id;
   }
 );
+
+export const clearCompletedAsync = createAsyncThunk(
+  "todo/clearCompletedAsync",
+  async () => {
+    const res = await fetch(`http://localhost:7000/todos`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await res.json();
+  }
+);
