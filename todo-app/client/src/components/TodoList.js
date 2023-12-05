@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getTodosAsync,
   toggleTodoAsync,
-  selectFilteredTodos,
   deleteTodoAsync,
-} from "../redux/todos/todosSlice";
+} from "../redux/todos/services";
+import { selectFilteredTodos } from "../redux/todos/todosSlice";
+
 import Loading from "./Loading";
 import Error from "./Error";
 function TodoList() {

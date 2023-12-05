@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
-import { message } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTodoAsync } from "../redux/todos/todosSlice";
+import { addTodoAsync } from "../redux/todos/services";
 import Loading from "./Loading";
 import Error from "./Error";
 
@@ -24,26 +22,9 @@ function Form() {
     setTitle("");
   };
 
-  // error mesajı
-  // const [messageApi, contextHolder] = message.useMessage();
-
-  // const error = () => {
-  //   messageApi.open({
-  //     type: "error",
-  //     content: newError,
-  //   });
-  // };
-  // useEffect(() => {
-  //   if (newError) {
-  //     error();
-  //   }
-  // }, [newError]);
-
   return (
     <div>
       <div>
-        {/* <div>{contextHolder}</div> */}
-
         <form onSubmit={handleSubmit}>
           <input
             disabled={isLoading}

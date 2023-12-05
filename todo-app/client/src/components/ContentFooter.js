@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  changeActiveFilter,
-  selectTodos,
-  deleteTodoAsync,
-} from "../redux/todos/todosSlice";
+import { changeActiveFilter, selectTodos } from "../redux/todos/todosSlice";
+import { deleteTodoAsync } from "../redux/todos/services";
 function ContentFooter() {
   const items = useSelector(selectTodos);
   const notCompleted = items.filter((item) => item.completed === false);
