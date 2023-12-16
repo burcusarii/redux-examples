@@ -1,10 +1,17 @@
 import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+]);
 function App() {
   return (
     <div>
-      Rick and Morty App
-      <a href="/deneme"> deneme sayfasına git</a>
+      <RouterProvider router={router}></RouterProvider>
     </div>
   );
 }
