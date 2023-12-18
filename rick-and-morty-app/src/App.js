@@ -1,16 +1,22 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
-
+import Location from "./pages/Location";
+import Navbar from "./components/Navbar";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/location",
+    element: <Location />,
+  },
 ]);
 function App() {
   return (
     <div>
+      <Navbar />
       <RouterProvider router={router}></RouterProvider>
     </div>
   );
