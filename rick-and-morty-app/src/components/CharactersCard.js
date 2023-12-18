@@ -2,9 +2,11 @@ import React from "react";
 
 function CharactersCard({ item }) {
   return (
-    <div>
-      <div>{item.name}</div>
-      <img src={item.image} alt="" />
+    <div className="char-card">
+      <h3>
+        <a href="#">{item.name}</a>
+      </h3>
+      <img src={item.image} alt={item.name} />
     </div>
   );
 }

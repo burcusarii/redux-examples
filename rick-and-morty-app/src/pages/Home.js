@@ -13,10 +13,12 @@ function Home() {
   console.log(data);
   return (
     <div>
-      <h1>Characters</h1>
-      {data.map((item) => {
-        return <CharactersCard item={item} />;
-      })}
+      <h1 className="char-title">Characters</h1>
+      <div className="chars">
+        {data.map((item) => {
+          return <CharactersCard item={item} key={item.id} />;
+        })}
+      </div>
     </div>
   );
 }

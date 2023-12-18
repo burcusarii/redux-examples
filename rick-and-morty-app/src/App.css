@@ -1,0 +1,45 @@
+.navbar {
+  display: flex;
+  gap: 10px;
+  font-size: 20px;
+  padding: 10px 0 10px 10px;
+  background-color: black;
+  color: white;
+}
+
+.navbar li {
+  transition: all 0.2s;
+}
+.navbar li:hover {
+  color: #ffa732;
+}
+
+.char-title {
+  padding-left: 10px;
+}
+.char-card {
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  background-color: #ffa732;
+  border-radius: 25px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.char-card h3 {
+  text-transform: uppercase;
+  padding-bottom: 5px;
+}
+
+.char-card img {
+  width: 100%;
+}
+
+.chars {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 50px;
+  justify-content: center;
+}
