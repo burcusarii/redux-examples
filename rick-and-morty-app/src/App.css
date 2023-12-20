@@ -14,7 +14,7 @@
   color: #ffa732;
 }
 
-.char-title {
+.page-title {
   padding-left: 10px;
 }
 .char-card {
@@ -42,4 +42,14 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 50px;
   justify-content: center;
+}
+
+.next-page-btn {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  margin: 10px 0;
+  text-align: center;
 }
