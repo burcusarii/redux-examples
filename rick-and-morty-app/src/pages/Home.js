@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import Error from "../components/Error";
 function Home() {
   const data = useSelector((state) => state.characters.items);
-  const isLoading = useSelector((state) => state.characters.isLoading);
+  const status = useSelector((state) => state.characters.status);
   const page = useSelector((state) => state.characters.page);
   const hasNextPage = useSelector((state) => state.characters.hasNextPage);
   const error = useSelector((state) => state.characters.error);
@@ -15,10 +15,12 @@ function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCharacters());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchCharacters());
+    }
+  }, [dispatch, status]);
 
-  if (error) {
+  if (status === "failed") {
     return <Error message={error} />;
   }
   return (
@@ -27,16 +29,16 @@ function Home() {
       <div className="chars">
         {data.map((item) => {
           return (
-            <Link to="char/2">
-              <CharactersCard item={item} key={item.id} />
+            <Link to="char/2" key={item.id}>
+              <CharactersCard item={item} />
             </Link>
           );
         })}
       </div>
       <div style={{ textAlign: "center", padding: 35 }}>
-        {isLoading && <Loading />}
+        {status === "loading" && <Loading />}
 
-        {!isLoading && hasNextPage && (
+        {status !== "loading" && hasNextPage && (
           <button
             className="next-page-btn"
             onClick={() => dispatch(fetchCharacters(page))}
