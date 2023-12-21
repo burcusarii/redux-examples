@@ -1,7 +1,7 @@
-import React from "react";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCharacters } from "../redux/charactersSlice";
+import { Link } from "react-router-dom";
 import CharactersCard from "../components/CharactersCard";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
@@ -26,7 +26,11 @@ function Home() {
       <h1 className="page-title">Characters</h1>
       <div className="chars">
         {data.map((item) => {
-          return <CharactersCard item={item} key={item.id} />;
+          return (
+            <Link to="location">
+              <CharactersCard item={item} key={item.id} />
+            </Link>
+          );
         })}
       </div>
       <div style={{ textAlign: "center", padding: 35 }}>
@@ -40,6 +44,8 @@ function Home() {
             Next Page {page}
           </button>
         )}
+
+        {!hasNextPage && <div>no more characters</div>}
       </div>
     </div>
   );
