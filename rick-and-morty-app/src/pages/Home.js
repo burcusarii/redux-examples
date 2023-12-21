@@ -27,7 +27,7 @@ function Home() {
       <div className="chars">
         {data.map((item) => {
           return (
-            <Link to="location">
+            <Link to="char/2">
               <CharactersCard item={item} key={item.id} />
             </Link>
           );
