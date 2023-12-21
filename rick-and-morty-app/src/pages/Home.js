@@ -29,7 +29,7 @@ function Home() {
       <div className="chars">
         {data.map((item) => {
           return (
-            <Link to="char/2" key={item.id}>
+            <Link to={`${item.id}`} key={item.id}>
               <CharactersCard item={item} />
             </Link>
           );
