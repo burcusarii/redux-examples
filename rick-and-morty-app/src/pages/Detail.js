@@ -20,9 +20,32 @@ function Detail() {
     <div>
       {loading && <Loading />}
       {char && (
-        <div>
-          <h1>{char.name}</h1>
-          <img src={char.image} alt="" />
+        <div className="char-details">
+          <div>
+            <img src={char.image} alt="" />
+          </div>
+          <div>
+            <h1>{char.name}</h1>
+            <p>
+              <span className="chart-text-title">Status: </span>
+              <span className={char.status === "Alive" ? "green" : "red"}>
+                {char.status}
+              </span>
+            </p>
+
+            <p>
+              <span className="chart-text-title">Species: </span>
+              <span>{char.species}</span>
+            </p>
+            <p>
+              <span className="chart-text-title">Gender: </span>
+              <span>{char.gender}</span>
+            </p>
+            <p>
+              <span className="chart-text-title">Planet: </span>
+              <span>{char.origin.name}</span>
+            </p>
+          </div>
         </div>
       )}
     </div>

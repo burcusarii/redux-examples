@@ -1,3 +1,9 @@
+.page-title {
+  padding-left: 10px;
+}
+
+/* Navbar */
+
 .navbar {
   display: flex;
   gap: 10px;
@@ -14,9 +20,7 @@
   color: #ffa732;
 }
 
-.page-title {
-  padding-left: 10px;
-}
+/* Char Card */
 .char-card {
   display: flex;
   flex-direction: column;
@@ -31,6 +35,8 @@
 .char-card img {
   width: 100%;
 }
+
+/* Home - Characters Page*/
 
 .chars {
   width: 90%;
@@ -60,4 +66,32 @@
   color: white;
   margin: 10px 0;
   text-align: center;
+}
+
+/* Char Details Page */
+
+.char-details {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.char-details img {
+  border-radius: 50px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.chart-text-title {
+  font-weight: bold;
+  color: gray;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
 }
